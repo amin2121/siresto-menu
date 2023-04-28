@@ -31,8 +31,8 @@ export default function Home() {
   )
 
   const fetchData = async () => {
-    let code = localStorage.getItem('code')
-    const response = await axios.get(`produk/produk-home?sort=DESC&id_kategori=${idKategori}&s=${keyword}&code=${code}`)
+    let branch = localStorage.getItem('branch')
+    const response = await axios.get(`produk/produk-home?sort=DESC&id_kategori=${idKategori}&s=${keyword}&resto=${branch}`)
     const res = response.data
     const produk = res.data.data
     

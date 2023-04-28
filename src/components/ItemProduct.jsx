@@ -11,7 +11,7 @@ export default function ItemProduct({id, gambar, judul, harga_jual, clickAction}
     useEffect(() => {
         if(coords.x !== -1 && coords.y !== -1) {
             setIsRippling(true)
-            setTimeout(() => setIsRippling(false), 300)
+            setTimeout(() => setIsRippling(false), 800)
         } else setIsRippling(false)
     }, [coords])
 

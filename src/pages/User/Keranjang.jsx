@@ -29,9 +29,9 @@ export default function Keranjang() {
   })
   
   let subtotal = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + (item.harga_jual * item.jumlah), 0)
-  let serviceCharge = data?.status_charge_service === '1' ? data?.charge_service : 0
-  let pajak = data?.status_pajak === '1' ? (data?.pajak * subtotal) / 100 : 0
-  let pajakPersen = data?.status_pajak === '1' ? data?.pajak : 0
+  let serviceCharge = data?.status_charge_service === 1 ? data?.charge_service : 0
+  let pajak = data?.status_pajak === 1 ? (data?.pajak * subtotal) / 100 : 0
+  let pajakPersen = data?.status_pajak === 1 ? data?.pajak : 0
 
   let diskon = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + item.diskon, 0);
   let labaTotal = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + item.laba, 0) - diskon;
@@ -53,8 +53,8 @@ export default function Keranjang() {
   }, [])
 
   const fetchSetting = async () => {
-    let code = localStorage.getItem('code')
-    const response = await axios.get('resto/setting-resto?code=' + code)
+    let resto = localStorage.getItem('branch')
+    const response = await axios.get(`resto/setting-resto?resto=${resto}`)
     const res = response.data.data
 
     return res
@@ -111,21 +111,23 @@ export default function Keranjang() {
   })
 
   const simpanOrder = async () => {
-    await mutation.mutate()
+    navigate('/nomor-telepon')
+    // () => navigate('/pembayaran', { state: { subtotal: totalSemua, diskon: diskon, total: subtotal, laba: labaTotal, pajak: pajak, serviceCharge: serviceCharge, pajakPersen: pajakPersen } })
+    // await mutation.mutate()
   }
 
   return (
     <>
-      <div className='flex justify-start items-center bg-white px-4 py-4'>
+      <div className='flex justify-start items-center bg-white px-4 py-2'>
         <HiOutlineChevronLeft size="20" className="cursor-pointer" onClick={() => navigate('/')}/>
-        <h5 className="font-bold text-lg text-center flex-1">Keranjang</h5>
+        <h5 className="font-bold text-md text-center flex-1">Keranjang</h5>
       </div>
       <div className='flex flex-col justify-between flex-1'>
-        <div className='container-produk w-full mt-4 space-y-4 px-4 flex-1 overflow-y-auto'>
+        <div className='w-full mt-4 space-y-3 px-4 overflow-y-auto h-[30rem] scrollbar-hide'>
             {keranjang.length > 0 ? keranjang?.map((item, index) => (layoutProduk(item, index))) : <KeranjangKosong />}
         </div>
         
-        {keranjang.length > 0 ? <div className='bg-white w-full px-6 pt-8 pb-6 text-sm rounded-t-[30px]'>
+        {keranjang.length > 0 ? <div className='bg-white w-full px-6 pt-8 pb-8 text-xs fixed lg:w-1/3 rounded-t-[30px] drop-shadow-2xl bottom-0'>
           <div className="flex justify-between mb-2">
             <span className='font-semibold'>Total</span>
             <span className='font-semibold text-blue-400'>IDR {rupiah(subtotal)}</span>
@@ -135,30 +137,26 @@ export default function Keranjang() {
             <span className='font-semibold text-blue-400'>IDR {rupiah(diskon)}</span>
           </div>
           {
-            data?.status_pajak === '1' &&
+            data?.status_pajak === 1 ?
             <div className='flex justify-between mb-2'>
                 <span className='font-bold'>Pajak ({data?.pajak}%)</span>
                 <span className='font-bold text-blue-400'>IDR {rupiah(pajak)}</span>
-            </div>
+            </div> : ''
           }
           {
-            data?.status_charge_service === '1' && 
-              <div className='flex justify-between mb-2'>
-                  <span className='font-bold'>Service Charge</span>
-                  <span className='font-bold text-blue-400'>IDR {rupiah(serviceCharge)}</span>
-              </div>
+            data?.status_charge_service === 1 ?
+            <div className='flex justify-between mb-2'>
+                <span className='font-bold'>Service Charge</span>
+                <span className='font-bold text-blue-400'>IDR {rupiah(serviceCharge)}</span>
+            </div> : ''
           }
-          <hr className='mt-4 mb-4 bg-slate-400'/>
-          <div className='flex justify-between text-lg mb-4'>
+          <hr className='mt-2 mb-2 bg-slate-400'/>
+          <div className='flex justify-between text-sm mb-4'>
             <span className='font-bold'>Subtotal</span>
             <span className='font-bold text-blue-500'>IDR {rupiah(totalSemua)}</span>
           </div>
-          <Button title="Pilih Menu Lain" type="button" className="w-full mb-2 bg-white text-blue-500 border-blue-500 border hover:bg-blue-700 hover:border-blue-700 hover:text-white" onClick={() => navigate('/')}/>
-          {
-            data?.alur_pembayaran_konsumen === 'bayar_langsung'
-            ? <Button title="Order Sekarang" type="button" className="w-full bg-blue-500 border-0 hover:bg-blue-700" onClick={() => navigate('/pembayaran', { state: { subtotal: totalSemua, diskon: diskon, total: subtotal, laba: labaTotal, pajak: pajak, serviceCharge: serviceCharge, pajakPersen: pajakPersen } })}/>
-            : <Button title="Order Sekarang" type="button" className="w-full bg-blue-500 border-0 hover:bg-blue-700" onClick={simpanOrder}/>
-          }
+          <Button title="Pilih Menu Lain" type="button" className="w-full mb-2 bg-white text-blue-500 border-blue-500 border hover:bg-blue-700 hover:border-blue-700 hover:text-white text-xs" onClick={() => navigate('/')}/>
+          <Button title="Order Sekarang" type="button" className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs" onClick={simpanOrder}/>
         </div> : ''}
       </div>
 

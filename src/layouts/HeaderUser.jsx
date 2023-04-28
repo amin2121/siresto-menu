@@ -6,34 +6,24 @@ import axios from '../utils/axios'
 import Logo from '../assets/logo/SiResto.png'
 
 import { IoCartOutline, IoBagHandleOutline } from 'react-icons/io5'
+import { useSearchParams } from "react-router-dom";
 
 function HeaderUser() {
   const { no_meja } = useSelector(state => state.nomeja)
   const navigate = useNavigate()
-  let { code, guest } = useParams()
   const dispatchNoMeja = useDispatch()
+  let [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    if(localStorage.getItem('code') == null) {
-      localStorage.setItem('code', code)
-      localStorage.setItem('guest', guest)
+    if(localStorage.getItem('source') == null || localStorage.getItem('source') == 'undefined') {
+      localStorage.setItem('source', searchParams.get('source'))
+      localStorage.setItem('branch', searchParams.get('branch'))
+      localStorage.setItem('meja', searchParams.get('meja'))
     }
 
-    ambilDataMeja()
+    dispatchNoMeja(settingNoMeja(localStorage.getItem('meja') == null ? searchParams.get('meja') : localStorage.getItem('meja')))
+    // http://menu.awandigital.id/home/source=qrcode&branch=nongki-nongkis&meja=E95
   }, [])
-
-  const ambilDataMeja = async () => {
-    let queryCode = ''
-    let codeLocal = localStorage.getItem('code')
-    if(codeLocal) {
-      queryCode = `_u=${codeLocal}`
-    }
-
-    const response = await axios.get(`meja/no-meja?${queryCode}`)
-    const res = response.data
-    const meja = res.data
-    dispatchNoMeja(settingNoMeja(meja.no_meja))
-  }
 
   return (
     <>

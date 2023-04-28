@@ -22,8 +22,9 @@ export default function CategoryProduct() {
 	})
 
     const fetchData = async () => {
-        const response = await axios.get(`kategori-produk?sort=DESC`)
-		const res = await response.data.data
+    	const branch = localStorage.getItem('branch')
+        const response = await axios.get(`kategori-produk/menu?resto=${branch}`)
+		const res = await response.data
 		const data = res.data
 		
 		return data
