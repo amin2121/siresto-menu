@@ -13,6 +13,8 @@ import { cariProduk, tambahJumlahBeliProduk, tambahProduk } from '../../features
 
 export default function Home() {
   const {idKategori, kategoriProduk, keyword, produkKeranjang} = useSelector(state => state.produk)
+  const noTelepon = localStorage.getItem('noTelepon') == 'null' ? 'Kosong' : localStorage.getItem('noTelepon')
+  const namaPelanggan = localStorage.getItem('namaPelanggan') == 'null' ? 'Kosong' : localStorage.getItem('namaPelanggan')
   const dispatch = useDispatch()
 
   // react query
@@ -69,6 +71,8 @@ export default function Home() {
           ? <div className="col-span-2 flex flex-1 justify-center items-center flex-col space-y-3"><LoadingPage /></div> 
           : <div className='container-produk grid grid-cols-2 gap-4 mt-2'>{data?.map((item, index) => (layoutProduk(item, index)))}</div>
         }
+
+        <div className="mt-10 text-center">{noTelepon} - {namaPelanggan}</div>
       </div>
     </>
   )
