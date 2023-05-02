@@ -13,8 +13,8 @@ import { cariProduk, tambahJumlahBeliProduk, tambahProduk } from '../../features
 
 export default function Home() {
   const {idKategori, kategoriProduk, keyword, produkKeranjang} = useSelector(state => state.produk)
-  const noTelepon = localStorage.getItem('noTelepon') == 'null' ? 'Kosong' : localStorage.getItem('noTelepon')
-  const namaPelanggan = localStorage.getItem('namaPelanggan') == 'null' ? 'Kosong' : localStorage.getItem('namaPelanggan')
+  const noTelepon = localStorage.getItem('noTelepon') == 'null' || localStorage.getItem('noTelepon') == undefined  ? 'Kosong' : localStorage.getItem('noTelepon')
+  const namaPelanggan = localStorage.getItem('namaPelanggan') == 'null'  || localStorage.getItem('namaPelanggan') == undefined ? 'Kosong' : localStorage.getItem('namaPelanggan')
   const dispatch = useDispatch()
 
   // react query
