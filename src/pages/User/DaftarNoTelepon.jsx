@@ -17,16 +17,20 @@ export default function DaftarNoTelepon() {
   const [noTelepon, setNoTelepon] = useState(null)
 
   function convertNoTelepon () {
-    let valNoTelepon = noTelepon.split(' ').join('')
-
-    if(valNoTelepon[0] === '0') {
-      valNoTelepon = valNoTelepon.replace('0', '62')
-    } else if(valNoTelepon[0] === '+') {
-      valNoTelepon = valNoTelepon.replace('+', '')
+    if(noTelepon == null || noTelepon == '') {
+      setNoTelepon('')
+    } else {
+      let valNoTelepon = noTelepon.split(' ').join('')
+  
+      if(valNoTelepon[0] === '0') {
+        valNoTelepon = valNoTelepon.replace('0', '62')
+      } else if(valNoTelepon[0] === '+') {
+        valNoTelepon = valNoTelepon.replace('+', '')
+      }
+  
+      localStorage.setItem('noTelepon', parseInt(valNoTelepon))
+      navigate('/nama-pelanggan')
     }
-
-    localStorage.setItem('noTelepon', parseInt(valNoTelepon))
-    navigate('/nama-pelanggan')
   }
 
   return (
@@ -44,7 +48,7 @@ export default function DaftarNoTelepon() {
             {noTelepon == '' ? <MessageError>No Telepon Tidak Boleh Kosong</MessageError> : ''}
           </div>
 
-          <div className='w-full px-4 absolute bottom-3 left-0'>
+          <div className='w-full px-4 absolute bottom-10 left-0'>
             <Button type="button" title="Lanjutkan" onClick={convertNoTelepon} className="w-full bg-blue-500 border-0 hover:bg-blue-400 mb-2"/>
           </div>
 

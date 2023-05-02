@@ -17,6 +17,11 @@ export default function Keranjang() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const keranjang = useSelector(state => state.produk.produkKeranjang)
+  const noTelepon = localStorage.getItem('noTelepon') == 'null' || localStorage.getItem('noTelepon') == undefined  ? 'Kosong' : localStorage.getItem('noTelepon')
+  const namaPelanggan = localStorage.getItem('namaPelanggan') == 'null'  || localStorage.getItem('namaPelanggan') == undefined ? 'Kosong' : localStorage.getItem('namaPelanggan')
+  const meja = localStorage.getItem('meja');
+  const source = localStorage.getItem('source');
+  const branch = localStorage.getItem('branch');
   
   // react query
   const {
@@ -38,7 +43,7 @@ export default function Keranjang() {
   let totalSemua = subtotal - diskon
   
   labaTotal = labaTotal - diskon
-  totalSemua = (+subtotal + +pajak + +serviceCharge) - diskon
+  totalSemua = (parseFloat(subtotal) + parseFloat(pajak) + parseFloat(serviceCharge)) - diskon
   
   const layoutProduk = (item, index) => (
     <ItemProductHorizontal key={index} id={item.id} gambar={item.gambar} judul={item.nama_produk} harga_jual={item.harga_jual} jumlah={item.jumlah} onDelete={() => dispatch(hapusProduk({id: item.id}))}/>
@@ -62,20 +67,23 @@ export default function Keranjang() {
 
   const mutation = useMutation(async () => {
     let produk = keranjang
-    let code = localStorage.getItem('code')
-    let guest = localStorage.getItem('guest')
-    let no_transaksi = localStorage.getItem('no_transaksi')
+
+     // state: { subtotal: totalSemua, diskon: diskon, total: subtotal, laba: labaTotal, pajak: pajak, serviceCharge: serviceCharge, pajakPersen: pajakPersen }
 
     let dataForm = {
       produk : produk,
-      subtotal : totalSemua,
+      total : totalSemua,
       diskon : diskon,
-      code : code,
-      code_user : guest,
-      no_transaksi : no_transaksi,
+      no_telepon : noTelepon,
+      nama_pelanggan : namaPelanggan,
       nilai_laba : labaTotal,
       pajak : pajak,
       service_charge : serviceCharge,
+      pajak_persen: pajakPersen,
+      subtotal: subtotal,
+      source: source,
+      meja: meja,
+      branch: branch,
     }
 
     const response = await axios.post('order/simpan-order-konsumen', dataForm)
@@ -111,9 +119,11 @@ export default function Keranjang() {
   })
 
   const simpanOrder = async () => {
-    navigate('/nomor-telepon')
-    // () => navigate('/pembayaran', { state: { subtotal: totalSemua, diskon: diskon, total: subtotal, laba: labaTotal, pajak: pajak, serviceCharge: serviceCharge, pajakPersen: pajakPersen } })
-    // await mutation.mutate()
+    if(noTelepon == 'Kosong' && namaPelanggan == 'Kosong') {
+      navigate('/nomor-telepon')
+    } else {
+      await mutation.mutate()
+    }
   }
 
   return (
@@ -156,7 +166,7 @@ export default function Keranjang() {
             <span className='font-bold text-blue-500'>IDR {rupiah(totalSemua)}</span>
           </div>
           <Button title="Pilih Menu Lain" type="button" className="w-full mb-2 bg-white text-blue-500 border-blue-500 border hover:bg-blue-700 hover:border-blue-700 hover:text-white text-xs" onClick={() => navigate('/')}/>
-          <Button title="Order Sekarang" type="button" className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs" onClick={simpanOrder}/>
+          <Button title={noTelepon == 'Kosong' && namaPelanggan == 'Kosong' ? 'Lanjutkan' : 'Order Sekarang'} type="button" className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs" onClick={simpanOrder}/>
         </div> : ''}
       </div>
 

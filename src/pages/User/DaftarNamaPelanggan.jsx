@@ -21,8 +21,12 @@ export default function DaftarNamaPelanggan() {
   const [namaPelanggan, setNamaPelanggan] = useState(null)
 
   function settingLocalStorage () {
-    localStorage.setItem('namaPelanggan', namaPelanggan)
-    navigate('/keranjang')
+    if(namaPelanggan == null || namaPelanggan == '') {
+      setNamaPelanggan('')
+    } else {
+      localStorage.setItem('namaPelanggan', namaPelanggan)
+      navigate('/keranjang')
+    }
   }
 
   return (
@@ -39,7 +43,9 @@ export default function DaftarNamaPelanggan() {
           <InputUserWithIcon title="Nama Pelanggan" directionIcon="left" type="text" icon={<FiUser size="20"/>} name="nama_pelanggan" id="input-nama-pelanggan" onChange={(e) => setNamaPelanggan(e.target.value)} error={namaPelanggan == '' ? true : false}/>
           {namaPelanggan == '' ? <MessageError>Nama Pelanggan Tidak Boleh Kosong</MessageError> : ''}
         </div>
-        <Button type="button" title="Lanjutkan" className="w-full bg-blue-500 border-0 hover:bg-blue-400 mb-2" onClick={settingLocalStorage}/>
+        <div className='w-full px-4 absolute bottom-10 left-0'>
+          <Button type="button" title="Lanjutkan" className="w-full bg-blue-500 border-0 hover:bg-blue-400 mb-2" onClick={settingLocalStorage}/>
+        </div>
       </div>
     </>
   )
