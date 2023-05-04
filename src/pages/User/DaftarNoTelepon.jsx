@@ -27,10 +27,23 @@ export default function DaftarNoTelepon() {
       } else if(valNoTelepon[0] === '+') {
         valNoTelepon = valNoTelepon.replace('+', '')
       }
-  
+      
       localStorage.setItem('noTelepon', parseInt(valNoTelepon))
-      navigate('/nama-pelanggan')
+
+      cekNamaPelanggan(valNoTelepon)
     }
+  }
+
+  function cekNamaPelanggan(valNoTelepon) {
+    axios.
+      get('menu/cek-pelanggan?telepon=' + valNoTelepon)
+      .then((response) => {
+        let data = response.data.data
+        navigate('/nama-pelanggan', { state: { namaPelanggan: data.nama_pelanggan }})
+      })
+      .catch((error) => {
+        navigate('/nama-pelanggan', { state: { namaPelanggan: null }})
+      })
   }
 
   return (

@@ -67,10 +67,12 @@ export default function Keranjang() {
 
   const mutation = useMutation(async () => {
     let produk = keranjang
+    let no_transaksi = localStorage.getItem('no_transaksi') === null ? 0 : localStorage.getItem('no_transaksi')
 
-     // state: { subtotal: totalSemua, diskon: diskon, total: subtotal, laba: labaTotal, pajak: pajak, serviceCharge: serviceCharge, pajakPersen: pajakPersen }
+    console.log(no_transaksi)
 
     let dataForm = {
+      no_transaksi : no_transaksi,
       produk : produk,
       total : totalSemua,
       diskon : diskon,
@@ -86,7 +88,7 @@ export default function Keranjang() {
       branch: branch,
     }
 
-    const response = await axios.post('order/simpan-order-konsumen', dataForm)
+    const response = await axios.post('menu/simpan-order-pelanggan', dataForm)
     const res = response.data
 
     if(res.meta.code !== 200) {
@@ -104,6 +106,9 @@ export default function Keranjang() {
       if(data) {
         dispatch(hapusSemuaProduk())
         navigate('/status-order')
+        if(localStorage.getItem('no_transaksi') === null) {
+          localStorage.setItem('no_transaksi', data.no_transaksi)
+        }
       }
 
       if(error) {

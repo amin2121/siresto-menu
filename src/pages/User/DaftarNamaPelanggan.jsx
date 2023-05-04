@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { InputUserWithIcon } from '../../components/InputUser'
 import { MessageError } from '../../components/Input'
 import { Button } from '../../components/Button'
+import { useLocation } from 'react-router-dom'
 
 // icons
 import { BiArrowBack } from 'react-icons/bi'
@@ -18,7 +19,9 @@ import { toastDark } from '../../utils/toast'
 
 export default function DaftarNamaPelanggan() {
   const navigate = useNavigate()
-  const [namaPelanggan, setNamaPelanggan] = useState(null)
+  const location = useLocation()
+  const state = location.state
+  const [namaPelanggan, setNamaPelanggan] = useState(state.namaPelanggan)
 
   function settingLocalStorage () {
     if(namaPelanggan == null || namaPelanggan == '') {
