@@ -3,11 +3,12 @@ import { HiOutlineChevronLeft } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../utils/axios'
 import { Button } from '../../components/Button'
-import { useQuery } from 'react-query'
+import { isError, useQuery } from 'react-query'
 import { TiWarningOutline } from 'react-icons/ti'
 import { BsCheckCircle } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import LoadingPage from '../../components/LoadingPage'
+import PesananKosong from '../../layouts/PesananKosong'
 import { rupiah, baseUrl } from '../../utils/strings'
 import moment from 'moment'
 
@@ -18,6 +19,8 @@ export default function StatusOrder() {
   // react query
   const {
     isLoading,
+    isFetching,
+    isError,
     data,
   } = useQuery(["data-order"], () => fetchData(), {
     staleTime: 15000, 
@@ -102,6 +105,8 @@ export default function StatusOrder() {
     </div>
   )
 
+  // <PesananKosong/>
+
   return (
     <>
       <div className='px-4 flex-1 flex flex-col'>
@@ -114,7 +119,9 @@ export default function StatusOrder() {
           {
             isLoading
             ? <div className="col-span-2 flex flex-1 justify-center items-center flex-col space-y-3"><LoadingPage /></div> 
-            : <div className='order__container w-full space-y-4 mb-32'>
+            : isError
+              ? <PesananKosong/>
+              : <div className='order__container w-full space-y-4 mb-32'>
                 <div class={`alert ${warnaAlert(data.setting.alur_pembayaran_konsumen, data.order.status_bayar)} shadow-lg`}>
                   <div>
                     {iconAlert(data.setting.alur_pembayaran_konsumen, data.order.status_bayar)}

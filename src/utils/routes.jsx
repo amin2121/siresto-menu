@@ -8,7 +8,7 @@ import Pembayaran from '../pages/User/Pembayaran'
 import DaftarNoTelepon from '../pages/User/DaftarNoTelepon'
 import DaftarNamaPelanggan from '../pages/User/DaftarNamaPelanggan'
 import PembayaranBerhasil from '../pages/User/PembayaranBerhasil'
-import StatusOrder from '../pages/User/StatusOrder'
+import Pesanan from '../pages/User/Pesanan'
 
 const RouteManager = () => {
 	return (
@@ -16,7 +16,7 @@ const RouteManager = () => {
 			<Route path="/" element={<ContainerUser/>}>
 				<Route index element={<Home />}/>
 				<Route path="home" element={<Home />}/>
-				<Route path="status-order" element={<StatusOrder />}/>
+				<Route path="pesanan" element={<Pesanan />}/>
 				<Route path="keranjang" element={<Keranjang />}/>
 				<Route path="pembayaran" element={<Pembayaran />}/>
 				<Route path="pembayaran-berhasil" element={<PembayaranBerhasil />}/>

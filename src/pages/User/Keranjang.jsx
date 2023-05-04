@@ -17,6 +17,7 @@ export default function Keranjang() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const keranjang = useSelector(state => state.produk.produkKeranjang)
+  let no_transaksi = localStorage.getItem('no_transaksi') === null ? 0 : localStorage.getItem('no_transaksi')
   const noTelepon = localStorage.getItem('noTelepon') == 'null' || localStorage.getItem('noTelepon') == undefined  ? 'Kosong' : localStorage.getItem('noTelepon')
   const namaPelanggan = localStorage.getItem('namaPelanggan') == 'null'  || localStorage.getItem('namaPelanggan') == undefined ? 'Kosong' : localStorage.getItem('namaPelanggan')
   const meja = localStorage.getItem('meja');
@@ -34,9 +35,9 @@ export default function Keranjang() {
   })
   
   let subtotal = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + (item.harga_jual * item.jumlah), 0)
-  let serviceCharge = data?.status_charge_service === 1 ? data?.charge_service : 0
-  let pajak = data?.status_pajak === 1 ? (data?.pajak * subtotal) / 100 : 0
-  let pajakPersen = data?.status_pajak === 1 ? data?.pajak : 0
+  let serviceCharge = data?.status_charge_service === 1 && no_transaksi === 0 ? data?.charge_service : 0
+  let pajak = data?.status_pajak === 1 && no_transaksi === 0 ? (data?.pajak * subtotal) / 100 : 0
+  let pajakPersen = data?.status_pajak === 1 && no_transaksi === 0 ? data?.pajak : 0
 
   let diskon = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + item.diskon, 0);
   let labaTotal = keranjang !== null && keranjang.reduce((accumulator, item) => accumulator + item.laba, 0) - diskon;
@@ -67,9 +68,6 @@ export default function Keranjang() {
 
   const mutation = useMutation(async () => {
     let produk = keranjang
-    let no_transaksi = localStorage.getItem('no_transaksi') === null ? 0 : localStorage.getItem('no_transaksi')
-
-    console.log(no_transaksi)
 
     let dataForm = {
       no_transaksi : no_transaksi,
@@ -105,7 +103,7 @@ export default function Keranjang() {
       // setIsAction(!isAction)
       if(data) {
         dispatch(hapusSemuaProduk())
-        navigate('/status-order')
+        navigate('/pesanan')
         if(localStorage.getItem('no_transaksi') === null) {
           localStorage.setItem('no_transaksi', data.no_transaksi)
         }
@@ -152,14 +150,14 @@ export default function Keranjang() {
             <span className='font-semibold text-blue-400'>IDR {rupiah(diskon)}</span>
           </div>
           {
-            data?.status_pajak === 1 ?
+            data?.status_pajak === 1 && no_transaksi === 0 ?
             <div className='flex justify-between mb-2'>
                 <span className='font-bold'>Pajak ({data?.pajak}%)</span>
                 <span className='font-bold text-blue-400'>IDR {rupiah(pajak)}</span>
             </div> : ''
           }
           {
-            data?.status_charge_service === 1 ?
+            data?.status_charge_service === 1 && no_transaksi === 0 ?
             <div className='flex justify-between mb-2'>
                 <span className='font-bold'>Service Charge</span>
                 <span className='font-bold text-blue-400'>IDR {rupiah(serviceCharge)}</span>

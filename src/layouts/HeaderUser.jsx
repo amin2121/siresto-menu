@@ -33,17 +33,17 @@ function HeaderUser() {
             </div>
             <div className='header-user__setting flex justify-evenly items-center space-x-8'>
                 <span className='header-user__nouser'>#{no_meja}</span>
-                <div className='relative cursor-pointer' onClick={() => navigate('/status-order')}>
+                <div className='relative cursor-pointer' onClick={() => navigate('/pesanan')}>
                     <span className='w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400'>
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
                     </span>
                     <IoBagHandleOutline size="24"/>
                 </div>
                 <div className='relative cursor-pointer' onClick={() => navigate('/keranjang')}>
                   <span className='w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400'>
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
                   </span>
                   <IoCartOutline size="24"/>
                 </div>
