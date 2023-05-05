@@ -22,7 +22,6 @@ function HeaderUser() {
     }
 
     dispatchNoMeja(settingNoMeja(localStorage.getItem('meja') == null ? searchParams.get('meja') : localStorage.getItem('meja')))
-    // http://menu.awandigital.id/home/source=qrcode&branch=nongki-nongkis&meja=E95
   }, [])
 
   return (
