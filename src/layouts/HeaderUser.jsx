@@ -15,7 +15,7 @@ function HeaderUser() {
   let [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    if(localStorage.getItem('source') == null || localStorage.getItem('source') == 'undefined') {
+    if(searchParams.get('source') != null || searchParams.get('source') != undefined || searchParams.get('source') != '' ) {
       localStorage.setItem('source', searchParams.get('source'))
       localStorage.setItem('branch', searchParams.get('branch'))
       localStorage.setItem('meja', searchParams.get('meja'))
