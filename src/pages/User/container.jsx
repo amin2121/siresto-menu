@@ -10,7 +10,7 @@ const Container = () => {
   const { warna } = useSelector((state) => state.warnaKeranjang);
   const { no_meja } = useSelector((state) => state.nomeja);
 
-  if (no_meja === null) {
+  if (no_meja === null || no_meja === "null") {
     return (
       <>
         <div class="min-h-screen flex items-center justify-center">
