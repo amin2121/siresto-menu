@@ -23,6 +23,7 @@ function HeaderUser() {
         searchParams.get("source") != "") &&
       pathname === "/home"
     ) {
+      localStorage.clear();
       localStorage.setItem("source", searchParams.get("source"));
       localStorage.setItem("branch", searchParams.get("branch"));
       localStorage.setItem("meja", searchParams.get("meja"));
