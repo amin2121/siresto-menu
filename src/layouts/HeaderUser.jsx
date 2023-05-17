@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { settingNoMeja } from "../features/nomejaSlice";
 import axios from "../utils/axios";
 import Logo from "../assets/logo/SiResto.png";
@@ -12,13 +12,16 @@ function HeaderUser() {
   const { no_meja } = useSelector((state) => state.nomeja);
   const navigate = useNavigate();
   const dispatchNoMeja = useDispatch();
+  const location = useLocation();
+  const { pathname } = location;
   let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (
-      searchParams.get("source") != null ||
-      searchParams.get("source") != undefined ||
-      searchParams.get("source") != ""
+      (searchParams.get("source") != null ||
+        searchParams.get("source") != undefined ||
+        searchParams.get("source") != "") &&
+      pathname === "/home"
     ) {
       localStorage.setItem("source", searchParams.get("source"));
       localStorage.setItem("branch", searchParams.get("branch"));
