@@ -43,6 +43,8 @@ export default function Home() {
     }
   );
 
+  const filteredData = data?.filter((item) => item.status_produk === "1");
+
   const layoutProduk = (item, index) => (
     <ItemProduct
       key={index}
@@ -98,7 +100,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="container-produk grid grid-cols-2 gap-4 mt-2">
-            {data?.map((item, index) => layoutProduk(item, index))}
+            {filteredData.map((item, index) => layoutProduk(item, index))}
           </div>
         )}
       </div>
