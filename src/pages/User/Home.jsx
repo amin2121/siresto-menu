@@ -14,6 +14,7 @@ import {
   tambahJumlahBeliProduk,
   tambahProduk,
 } from "../../features/produkSlice";
+import Promo from "../../components/Promo";
 
 export default function Home() {
   const { idKategori, kategoriProduk, keyword, produkKeranjang } = useSelector(
@@ -93,6 +94,7 @@ export default function Home() {
           placeholder="Search a good"
           onChange={handleCariProduk}
         />
+        <Promo />
         <CategoryProduct />
         {isLoading ? (
           <div className="col-span-2 flex flex-1 justify-center items-center flex-col space-y-3">
