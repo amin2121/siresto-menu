@@ -3,7 +3,7 @@ import ItemProductHorizontal from "../../components/ItemProductHorizontal";
 import KeranjangKosong from "../../layouts/KeranjangKosong";
 import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { swNormal } from "../../utils/sw";
 import axios from "../../utils/axios";
@@ -34,6 +34,7 @@ export default function Keranjang() {
   const meja = localStorage.getItem("meja");
   const source = localStorage.getItem("source");
   const branch = localStorage.getItem("branch");
+  const promo = JSON.parse(localStorage.getItem("promo"));
 
   // react query
   const { data } = useQuery(["data-setting"], () => fetchSetting(), {
@@ -62,7 +63,11 @@ export default function Keranjang() {
 
   let diskon =
     keranjang !== null &&
-    keranjang.reduce((accumulator, item) => accumulator + item.diskon, 0);
+    keranjang.reduce(
+      (accumulator, item) =>
+        accumulator + item.diskon + (promo ? parseFloat(promo.promo) : 0),
+      0
+    );
   let labaTotal =
     keranjang !== null &&
     keranjang.reduce((accumulator, item) => accumulator + item.laba, 0) -
@@ -74,7 +79,7 @@ export default function Keranjang() {
     parseFloat(subtotal) +
     parseFloat(pajak) +
     parseFloat(serviceCharge) -
-    diskon;
+    parseFloat(diskon);
 
   const layoutProduk = (item, index) => (
     <ItemProductHorizontal
@@ -193,6 +198,34 @@ export default function Keranjang() {
 
         {keranjang.length > 0 ? (
           <div className="bg-white w-full px-6 pt-8 pb-8 text-xs fixed lg:w-1/3 rounded-t-[30px] drop-shadow-2xl bottom-0">
+            <button
+              type="button"
+              className="btn gap-3flex items-center justify-between w-full bg-blue-400 border-0 hover:bg-blue-700 text-xs mb-5"
+              onClick={() => navigate("/promo")}
+            >
+              {promo ? (
+                <span className="flex items-center">
+                  {promo.judul_promo} (IDR {rupiah(promo.promo)})
+                </span>
+              ) : (
+                <span className="flex items-center">Pilih Promo</span>
+              )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>
               <span className="font-semibold text-blue-400">
@@ -200,9 +233,9 @@ export default function Keranjang() {
               </span>
             </div>
             <div className="flex justify-between mb-2">
-              <span className="font-semibold">Diskon</span>
+              <span className="font-semibold">Diskon + Promo</span>
               <span className="font-semibold text-blue-400">
-                IDR {rupiah(diskon)}
+                - IDR {rupiah(diskon)}
               </span>
             </div>
             {data?.status_pajak === 1 && no_transaksi === 0 ? (

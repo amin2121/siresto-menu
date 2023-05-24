@@ -9,6 +9,7 @@ import DaftarNoTelepon from "../pages/User/DaftarNoTelepon";
 import DaftarNamaPelanggan from "../pages/User/DaftarNamaPelanggan";
 import PembayaranBerhasil from "../pages/User/PembayaranBerhasil";
 import Pesanan from "../pages/User/Pesanan";
+import PilihPromo from "../pages/User/PilihPromo";
 
 const RouteManager = () => {
   return (
@@ -20,6 +21,7 @@ const RouteManager = () => {
         <Route path="keranjang" element={<Keranjang />} />
         <Route path="pembayaran" element={<Pembayaran />} />
         <Route path="pembayaran-berhasil" element={<PembayaranBerhasil />} />
+        <Route path="promo" element={<PilihPromo />} />
       </Route>
       <Route path="/" element={<ContainerEmpty />}>
         <Route path="nomor-telepon" element={<DaftarNoTelepon />} />
