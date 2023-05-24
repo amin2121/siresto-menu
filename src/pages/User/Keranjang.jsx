@@ -63,23 +63,20 @@ export default function Keranjang() {
 
   let diskon =
     keranjang !== null &&
-    keranjang.reduce(
-      (accumulator, item) =>
-        accumulator + item.diskon + (promo ? parseFloat(promo.promo) : 0),
-      0
-    );
+    keranjang.reduce((accumulator, item) => accumulator + item.diskon, 0);
   let labaTotal =
     keranjang !== null &&
     keranjang.reduce((accumulator, item) => accumulator + item.laba, 0) -
       diskon;
   let totalSemua = subtotal - diskon;
 
-  labaTotal = labaTotal - diskon;
+  labaTotal = labaTotal - diskon - (promo ? parseFloat(promo.promo) : 0);
   totalSemua =
     parseFloat(subtotal) +
     parseFloat(pajak) +
     parseFloat(serviceCharge) -
-    parseFloat(diskon);
+    parseFloat(diskon) -
+    (promo ? parseFloat(promo.promo) : 0);
 
   const layoutProduk = (item, index) => (
     <ItemProductHorizontal
@@ -117,7 +114,7 @@ export default function Keranjang() {
         no_transaksi: no_transaksi,
         produk: produk,
         total: totalSemua,
-        diskon: diskon,
+        diskon: diskon + (promo ? parseFloat(promo.promo) : 0),
         no_telepon: noTelepon,
         nama_pelanggan: namaPelanggan,
         nilai_laba: labaTotal,
@@ -235,7 +232,7 @@ export default function Keranjang() {
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Diskon + Promo</span>
               <span className="font-semibold text-blue-400">
-                - IDR {rupiah(diskon)}
+                - IDR {rupiah(diskon + (promo ? parseFloat(promo.promo) : 0))}
               </span>
             </div>
             {data?.status_pajak === 1 && no_transaksi === 0 ? (
