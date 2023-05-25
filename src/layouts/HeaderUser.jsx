@@ -16,19 +16,20 @@ function HeaderUser() {
   const { pathname } = location;
   let [searchParams, setSearchParams] = useSearchParams();
 
+  console.log(searchParams.get("source"));
+
   useEffect(() => {
-    if (searchParams.get("source") != null || pathname == "/") {
-      localStorage.clear();
-      localStorage.setItem("source", searchParams.get("source"));
-      localStorage.setItem("branch", searchParams.get("branch"));
-      localStorage.setItem("meja", searchParams.get("meja"));
+    if (searchParams.get("source") != null) {
+      sessionStorage.setItem("source", searchParams.get("source"));
+      sessionStorage.setItem("branch", searchParams.get("branch"));
+      sessionStorage.setItem("meja", searchParams.get("meja"));
     }
 
     dispatchNoMeja(
       settingNoMeja(
-        localStorage.getItem("meja") == null
+        sessionStorage.getItem("meja") == null
           ? searchParams.get("meja")
-          : localStorage.getItem("meja")
+          : sessionStorage.getItem("meja")
       )
     );
   }, []);

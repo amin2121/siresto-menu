@@ -29,12 +29,13 @@ export default function StatusOrder() {
   );
 
   const fetchData = async () => {
-    let branch = localStorage.getItem("branch");
-    let no_transaksi = localStorage.getItem("no_transaksi");
+    let branch = sessionStorage.getItem("branch");
+    let no_transaksi = sessionStorage.getItem("no_transaksi");
 
     const response = await axios.get(
       `menu/cari-order-transaksi?branch=${branch}&no_transaksi=${no_transaksi}`
     );
+
     const res = response.data;
     const order = res.data;
 
@@ -167,7 +168,7 @@ export default function StatusOrder() {
           ) : (
             <div className="order__container w-full space-y-4 mb-32">
               <div
-                class={`alert ${warnaAlert(
+                className={`alert ${warnaAlert(
                   data.setting.alur_pembayaran_konsumen,
                   data.order.status_bayar
                 )} shadow-lg`}

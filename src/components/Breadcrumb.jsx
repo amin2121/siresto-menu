@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Breadcrumb = ({ children }) => {
-    return (
-        <div class="text-sm breadcrumbs">
-          {children}
-        </div>
-    );
+  return <div className="text-sm breadcrumbs">{children}</div>;
 };
 
 export default Breadcrumb;

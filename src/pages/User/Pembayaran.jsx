@@ -39,10 +39,10 @@ export default function Pembayaran() {
   const mutation = useMutation(
     async (data) => {
       const produkKeranjang = JSON.parse(
-        localStorage.getItem("produkKeranjang")
+        sessionStorage.getItem("produkKeranjang")
       );
-      const guest = localStorage.getItem("guest");
-      const code = localStorage.getItem("code");
+      const guest = sessionStorage.getItem("guest");
+      const code = sessionStorage.getItem("code");
 
       if (namaPelanggan === null || namaPelanggan === undefined) {
         localStorage.setItem("nama-pelanggan", data.nama_customer);
@@ -82,7 +82,7 @@ export default function Pembayaran() {
         setLoading(!isLoading);
 
         if (data) {
-          localStorage.removeItem("produkKeranjang");
+          sessionStorage.removeItem("produkKeranjang");
           reset();
           clearErrors();
         }

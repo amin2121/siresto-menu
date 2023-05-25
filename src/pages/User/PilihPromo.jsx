@@ -10,7 +10,7 @@ import { Button } from "../../components/Button";
 
 export default function PilihPromo() {
   const navigate = useNavigate();
-  const promo = JSON.parse(localStorage.getItem("promo"));
+  const promo = JSON.parse(sessionStorage.getItem("promo"));
   const [idPromo, setIdPromo] = useState(promo ? promo.id : "");
 
   const handlePromoChange = (e) => {
@@ -34,7 +34,7 @@ export default function PilihPromo() {
   });
 
   const fetchData = async () => {
-    const branch = localStorage.getItem("branch");
+    const branch = sessionStorage.getItem("branch");
     const response = await axios.get(`promo/menu?resto=${branch}`);
     const res = await response.data;
     const data = res.data;
@@ -45,7 +45,7 @@ export default function PilihPromo() {
   const selectedPromo = data?.find((obj) => obj.id == idPromo);
 
   function simpanPromo() {
-    localStorage.setItem(
+    sessionStorage.setItem(
       "promo",
       JSON.stringify({
         id: selectedPromo.id,

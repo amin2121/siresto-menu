@@ -57,7 +57,7 @@ export default function Home() {
   );
 
   const fetchData = async () => {
-    let branch = localStorage.getItem("branch");
+    let branch = sessionStorage.getItem("branch");
     const response = await axios.get(
       `produk/produk-home?sort=DESC&id_kategori=${idKategori}&s=${keyword}&resto=${branch}`
     );

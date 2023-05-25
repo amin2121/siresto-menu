@@ -13,9 +13,9 @@ const Container = () => {
   if (no_meja === null || no_meja === "null") {
     return (
       <>
-        <div class="min-h-screen flex items-center justify-center">
-          <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-lg mx-auto text-center">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-lg mx-auto text-center">
               <a href="https://awandigital.id" rel="noopener noreferrer">
                 <img src={Logo} alt={Logo} className="w-40" />
               </a>

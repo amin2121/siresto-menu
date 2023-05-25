@@ -18,9 +18,9 @@ export default function Keranjang() {
   const dispatch = useDispatch();
   const keranjang = useSelector((state) => state.produk.produkKeranjang);
   let no_transaksi =
-    localStorage.getItem("no_transaksi") === null
+    sessionStorage.getItem("no_transaksi") === null
       ? 0
-      : localStorage.getItem("no_transaksi");
+      : sessionStorage.getItem("no_transaksi");
   const noTelepon =
     localStorage.getItem("noTelepon") == "null" ||
     localStorage.getItem("noTelepon") == undefined
@@ -31,10 +31,10 @@ export default function Keranjang() {
     localStorage.getItem("namaPelanggan") == undefined
       ? "Kosong"
       : localStorage.getItem("namaPelanggan");
-  const meja = localStorage.getItem("meja");
-  const source = localStorage.getItem("source");
-  const branch = localStorage.getItem("branch");
-  const promo = JSON.parse(localStorage.getItem("promo"));
+  const meja = sessionStorage.getItem("meja");
+  const source = sessionStorage.getItem("source");
+  const branch = sessionStorage.getItem("branch");
+  const promo = JSON.parse(sessionStorage.getItem("promo"));
 
   // react query
   const { data } = useQuery(["data-setting"], () => fetchSetting(), {
@@ -99,7 +99,7 @@ export default function Keranjang() {
   }, []);
 
   const fetchSetting = async () => {
-    let resto = localStorage.getItem("branch");
+    let resto = sessionStorage.getItem("branch");
     const response = await axios.get(`resto/setting-resto?resto=${resto}`);
     const res = response.data.data;
 
@@ -149,8 +149,8 @@ export default function Keranjang() {
         if (data) {
           dispatch(hapusSemuaProduk());
           navigate("/pesanan");
-          if (localStorage.getItem("no_transaksi") === null) {
-            localStorage.setItem("no_transaksi", data.no_transaksi);
+          if (sessionStorage.getItem("no_transaksi") === null) {
+            sessionStorage.setItem("no_transaksi", data.no_transaksi);
           }
         }
 
