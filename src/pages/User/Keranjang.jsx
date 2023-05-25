@@ -106,12 +106,15 @@ export default function Keranjang() {
     return res;
   };
 
+  const nomorTransaksiArr = no_transaksi === 0 ? 0 : no_transaksi.split(",");
+  const lastTransaksi = nomorTransaksiArr === 0 ? 0 : nomorTransaksiArr.pop();
+
   const mutation = useMutation(
     async () => {
       let produk = keranjang;
 
       let dataForm = {
-        no_transaksi: no_transaksi,
+        no_transaksi: no_transaksi === 0 ? no_transaksi : lastTransaksi,
         produk: produk,
         total: totalSemua,
         diskon: diskon + (promo ? parseFloat(promo.promo) : 0),
@@ -149,8 +152,14 @@ export default function Keranjang() {
         if (data) {
           dispatch(hapusSemuaProduk());
           navigate("/pesanan");
-          if (sessionStorage.getItem("no_transaksi") === null) {
+
+          let noTransaksi = sessionStorage.getItem("no_transaksi");
+
+          if (noTransaksi === null) {
             sessionStorage.setItem("no_transaksi", data.no_transaksi);
+          } else if (lastTransaksi != data.no_transaksi) {
+            noTransaksi = `${noTransaksi},${data.no_transaksi}`;
+            sessionStorage.setItem("no_transaksi", noTransaksi);
           }
         }
 

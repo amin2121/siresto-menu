@@ -44,10 +44,10 @@ export const rupiahToNumber = (str) => {
   return str;
 };
 
-export const baseUrl = "https://api.siresto.awandigital.id/";
+// export const baseUrl = "https://api.siresto.awandigital.id/";
 export const baseUrlFrontEnd = "https://siresto.awandigital.id/";
 
-// export const baseUrl = "http://127.0.0.1:8000/";
+export const baseUrl = "http://127.0.0.1:8000/";
 // export const baseUrlFrontEnd = 'http://localhost:3000/'
 
 export const capitalize = (val) => {
