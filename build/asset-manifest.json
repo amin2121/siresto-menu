@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "https://menu.awandigital.id/static/css/main.d67de5b8.css",
-    "main.js": "https://menu.awandigital.id/static/js/main.7ecb5cb2.js",
+    "main.css": "https://menu.awandigital.id/static/css/main.e269faa6.css",
+    "main.js": "https://menu.awandigital.id/static/js/main.6c673e6f.js",
     "static/js/787.db002e92.chunk.js": "https://menu.awandigital.id/static/js/787.db002e92.chunk.js",
     "static/media/SiResto.png": "https://menu.awandigital.id/static/media/SiResto.97edc9331c2947250407.png",
     "static/media/slick.svg": "https://menu.awandigital.id/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -9,12 +9,12 @@
     "static/media/slick.ttf": "https://menu.awandigital.id/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "https://menu.awandigital.id/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "https://menu.awandigital.id/index.html",
-    "main.d67de5b8.css.map": "https://menu.awandigital.id/static/css/main.d67de5b8.css.map",
-    "main.7ecb5cb2.js.map": "https://menu.awandigital.id/static/js/main.7ecb5cb2.js.map",
+    "main.e269faa6.css.map": "https://menu.awandigital.id/static/css/main.e269faa6.css.map",
+    "main.6c673e6f.js.map": "https://menu.awandigital.id/static/js/main.6c673e6f.js.map",
     "787.db002e92.chunk.js.map": "https://menu.awandigital.id/static/js/787.db002e92.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d67de5b8.css",
-    "static/js/main.7ecb5cb2.js"
+    "static/css/main.e269faa6.css",
+    "static/js/main.6c673e6f.js"
   ]
 }
