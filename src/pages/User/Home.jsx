@@ -94,7 +94,7 @@ export default function Home() {
           placeholder="Search a good"
           onChange={handleCariProduk}
         />
-        <Promo />
+        {/* <Promo /> */}
         <CategoryProduct />
         {isLoading ? (
           <div className="col-span-2 flex flex-1 justify-center items-center flex-col space-y-3">
