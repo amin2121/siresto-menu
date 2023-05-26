@@ -166,120 +166,128 @@ export default function StatusOrder() {
           ) : isError ? (
             <PesananKosong />
           ) : (
-            data.order.map((item, index) => (
+            <div className="order__container w-full space-y-4 mb-32 text-sm">
               <div
-                key={index}
-                className="order__container w-full space-y-4 mb-32"
+                className={`alert ${warnaAlert(
+                  data.setting.alur_pembayaran_konsumen,
+                  data.order[0].status_bayar
+                )} shadow-lg`}
               >
-                <div
-                  className={`alert ${warnaAlert(
-                    data.setting.alur_pembayaran_konsumen,
-                    item.status_bayar
-                  )} shadow-lg`}
-                >
-                  <div>
-                    {iconAlert(
-                      data.setting.alur_pembayaran_konsumen,
-                      item.status_bayar
-                    )}
-                    <span>
-                      {pesanAlert(
-                        data.setting.alur_pembayaran_konsumen,
-                        item.status_bayar
-                      )}
-                    </span>
-                  </div>
-                </div>
                 <div>
-                  <div className="order__content">
+                  {iconAlert(
+                    data.setting.alur_pembayaran_konsumen,
+                    data.order[0].status_bayar
+                  )}
+                  <span>
+                    {pesanAlert(
+                      data.setting.alur_pembayaran_konsumen,
+                      data.order[0].status_bayar
+                    )}
+                  </span>
+                </div>
+              </div>
+              <div>
+                {data.order.map((item, index) => (
+                  <div key={index} className="mb-12">
                     <div>
-                      <div
-                        className={`order__status text-xs py-2 ${pilihWarnaStatusOrder(
-                          data.order.status_order
-                        )} font-semibold px-4 text-white flex justify-between items-center rounded-t-md`}
-                      >
-                        <span>{item.no_transaksi}</span>
-                        <span>
-                          {item.status_order.replace("_", " ").toUpperCase()}
-                        </span>
+                      <div className="order__content">
+                        <div>
+                          <div
+                            className={`order__status text-xs py-2 ${pilihWarnaStatusOrder(
+                              item.status_order
+                            )} font-semibold px-4 text-white flex justify-between items-center rounded-t-md`}
+                          >
+                            <span>{item.no_transaksi}</span>
+                            <span>
+                              {item.status_order
+                                .replace("_", " ")
+                                .toUpperCase()}
+                            </span>
+                          </div>
+                          <div key={index}>
+                            {item.order_detail.map((item, index) =>
+                              layoutProduk(item, index)
+                            )}
+                          </div>
+                          {/* {data.order.order_detail.map((item, index) =>
+                        layoutProduk(item, index)
+                      )} */}
+                        </div>
                       </div>
-                      <div key={index}>
-                        {item.order_detail.map((item, index) =>
-                          layoutProduk(item, index)
-                        )}
-                      </div>
-                      {/* {data.order.order_detail.map((item, index) =>
-                      layoutProduk(item, index)
-                    )} */}
                     </div>
-                  </div>
-                </div>
-                <div className={`border border-slate-200 mt-4 rounded-md`}>
-                  <h1 className="text-sm text-black font-semibold mb-2 py-2 px-4 bg-slate-100 rounded-t-md">
-                    Informasi Order
-                  </h1>
-                  <div className="py-2 px-4">
-                    <div className="flex justify-between text-xs text-slate-700 mb-2">
-                      <h1 className="font-semibold">Nama</h1>
-                      <p className="font-semibold">
-                        {data != null ? item.nama_pelanggan : ""}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-700 mb-2">
-                      <h1 className="font-semibold">No Meja</h1>
-                      <p className="font-semibold">
-                        {data != null ? item.meja?.no_meja : ""}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-700 mb-2">
-                      <h1 className="font-semibold">Tanggal & Waktu</h1>
-                      <p className="font-semibold">
-                        {moment(data != null ? item.created_at : "").format(
-                          "DD-MM-YYYY HH:MM"
-                        )}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-700 mb-2">
-                      <h1 className="font-semibold">Subtotal</h1>
-                      <p className="font-semibold">
-                        IDR{" "}
-                        {rupiah(
-                          data != null
-                            ? parseInt(item.nilai_transaksi) -
-                                (parseInt(item.service_charge) +
-                                  parseInt(item.pajak)) +
-                                parseInt(item.diskon)
-                            : ""
-                        )}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <h1 className="font-semibold text-green-500">Diskon</h1>
-                      <p className="font-semibold text-green-500">
-                        IDR {rupiah(data != null ? item.diskon : "")}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-700 mb-2">
-                      <h1 className="font-semibold">Pajak</h1>
-                      <p className="font-semibold">
-                        IDR {rupiah(data != null ? item.pajak : "")}
-                      </p>
-                    </div>
-                    <div className="flex justify-between text-xs text-slate-700 mb-4">
-                      <h1 className="font-semibold">Service Charge</h1>
-                      <p className="font-semibold">
-                        IDR {rupiah(data != null ? item.service_charge : "")}
-                      </p>
-                    </div>
+                    <div className={`border border-slate-200 mt-4 rounded-md`}>
+                      <h1 className="text-sm text-black font-semibold mb-2 py-2 px-4 bg-slate-100 rounded-t-md">
+                        Informasi Order
+                      </h1>
+                      <div className="py-2 px-4">
+                        <div className="flex justify-between text-xs text-slate-700 mb-2">
+                          <h1 className="font-semibold">Nama</h1>
+                          <p className="font-semibold">
+                            {data != null ? item.nama_pelanggan : ""}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs text-slate-700 mb-2">
+                          <h1 className="font-semibold">No Meja</h1>
+                          <p className="font-semibold">
+                            {data != null ? item.meja?.no_meja : ""}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs text-slate-700 mb-2">
+                          <h1 className="font-semibold">Tanggal & Waktu</h1>
+                          <p className="font-semibold">
+                            {moment(data != null ? item.created_at : "").format(
+                              "DD-MM-YYYY HH:MM"
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs text-slate-700 mb-2">
+                          <h1 className="font-semibold">Subtotal</h1>
+                          <p className="font-semibold">
+                            IDR{" "}
+                            {rupiah(
+                              data != null
+                                ? parseInt(item.nilai_transaksi) -
+                                    (parseInt(item.service_charge) +
+                                      parseInt(item.pajak)) +
+                                    parseInt(item.diskon)
+                                : ""
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs mb-2">
+                          <h1 className="font-semibold text-green-500">
+                            Diskon
+                          </h1>
+                          <p className="font-semibold text-green-500">
+                            IDR {rupiah(data != null ? item.diskon : "")}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs text-slate-700 mb-2">
+                          <h1 className="font-semibold">Pajak</h1>
+                          <p className="font-semibold">
+                            IDR {rupiah(data != null ? item.pajak : "")}
+                          </p>
+                        </div>
+                        <div className="flex justify-between text-xs text-slate-700 mb-4">
+                          <h1 className="font-semibold">Service Charge</h1>
+                          <p className="font-semibold">
+                            IDR{" "}
+                            {rupiah(data != null ? item.service_charge : "")}
+                          </p>
+                        </div>
 
-                    <div className="flex justify-between text-xs text-slate-700 pt-4 border-t border-dashed border-slate-400 mb-2">
-                      <h1 className="font-bold">Total Transaksi</h1>
-                      <p className="font-bold">
-                        IDR {rupiah(data != null ? item.nilai_transaksi : "")}
-                      </p>
+                        <div className="flex justify-between text-xs text-slate-700 pt-4 border-t border-dashed border-slate-400 mb-2">
+                          <h1 className="font-bold">Total Transaksi</h1>
+                          <p className="font-bold">
+                            IDR{" "}
+                            {rupiah(data != null ? item.nilai_transaksi : "")}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
+
                 <div className="w-full px-4 fixed bottom-1 left-0 bg-white flex items-center py-4">
                   <Link
                     to="/home"
@@ -293,7 +301,7 @@ export default function StatusOrder() {
                   </Link>
                 </div>
               </div>
-            ))
+            </div>
           )}
         </div>
       </div>

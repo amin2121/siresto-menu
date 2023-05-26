@@ -16,8 +16,6 @@ function HeaderUser() {
   const { pathname } = location;
   let [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(searchParams.get("source"));
-
   useEffect(() => {
     if (searchParams.get("source") != null) {
       sessionStorage.setItem("source", searchParams.get("source"));
