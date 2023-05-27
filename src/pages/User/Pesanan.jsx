@@ -15,6 +15,7 @@ import moment from "moment";
 export default function StatusOrder() {
   moment.locale("id");
   const navigate = useNavigate();
+  const no_transaksi = sessionStorage.getItem("no_transaksi");
 
   // react query
   const { isLoading, isFetching, isError, data } = useQuery(
@@ -163,7 +164,7 @@ export default function StatusOrder() {
             <div className="col-span-2 flex flex-1 justify-center items-center flex-col space-y-3">
               <LoadingPage />
             </div>
-          ) : isError ? (
+          ) : isError || no_transaksi === null ? (
             <PesananKosong />
           ) : (
             <div className="order__container w-full space-y-4 mb-32 text-sm">

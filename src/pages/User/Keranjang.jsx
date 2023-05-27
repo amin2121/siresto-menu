@@ -54,16 +54,30 @@ export default function Keranjang() {
     data?.status_charge_service === 1 && no_transaksi === 0
       ? data?.charge_service
       : 0;
-  let pajak =
-    data?.status_pajak === 1 && no_transaksi === 0
-      ? (data?.pajak * subtotal) / 100
-      : 0;
   let pajakPersen =
     data?.status_pajak === 1 && no_transaksi === 0 ? data?.pajak : 0;
 
   let diskon =
     keranjang !== null &&
-    keranjang.reduce((accumulator, item) => accumulator + item.diskon, 0);
+    keranjang.reduce(
+      (accumulator, item) => accumulator + item.diskon * item.jumlah,
+      0
+    );
+
+  let pajak =
+    data?.status_pajak === 1 && no_transaksi === 0
+      ? (data?.pajak *
+          (keranjang !== null &&
+            keranjang.reduce(
+              (accumulator, item) =>
+                accumulator + item.harga_jual * item.jumlah,
+              0
+            ) -
+              diskon -
+              (promo ? parseFloat(promo.promo) : 0))) /
+        100
+      : 0;
+
   let labaTotal =
     keranjang !== null &&
     keranjang.reduce((accumulator, item) => accumulator + item.laba, 0) -
