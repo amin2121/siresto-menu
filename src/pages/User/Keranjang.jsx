@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ItemProductHorizontal from "../../components/ItemProductHorizontal";
 import KeranjangKosong from "../../layouts/KeranjangKosong";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,14 +35,46 @@ export default function Keranjang() {
   const source = sessionStorage.getItem("source");
   const branch = sessionStorage.getItem("branch");
   const promo = JSON.parse(sessionStorage.getItem("promo"));
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("bayar_langsung");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   // react query
-  const { data } = useQuery(["data-setting"], () => fetchSetting(), {
+  const { data: data } = useQuery(["data-setting"], () => fetchSetting(), {
     staleTime: 15000,
     refetchInterval: 60000,
     keepPreviousData: true,
     refetchOnWindowFocus: false,
   });
+
+  const {
+    isLoading,
+    isFetching,
+    isError,
+    data: data2,
+  } = useQuery(["data-order"], () => fetchData(), {
+    staleTime: 15000,
+    refetchInterval: 15000,
+    keepPreviousData: true,
+    refetchOnWindowFocus: false,
+  });
+
+  const fetchData = async () => {
+    let branch = sessionStorage.getItem("branch");
+    let no_transaksi = sessionStorage.getItem("no_transaksi");
+
+    const response = await axios.get(
+      `menu/cari-order-transaksi?branch=${branch}&no_transaksi=${no_transaksi}`
+    );
+
+    const res = response.data;
+    const order = res.data;
+
+    return order;
+  };
 
   let subtotal =
     keranjang !== null &&
@@ -142,6 +174,7 @@ export default function Keranjang() {
         source: source,
         meja: meja,
         branch: branch,
+        status_pembayaran: selectedOption,
       };
 
       const response = await axios.post(
@@ -164,8 +197,9 @@ export default function Keranjang() {
       onSettled: async (data, error) => {
         // setIsAction(!isAction)
         if (data) {
+          let status_pembayaran = selectedOption;
           dispatch(hapusSemuaProduk());
-          navigate("/pesanan");
+          navigate("/pesanan", { state: status_pembayaran });
 
           let noTransaksi = sessionStorage.getItem("no_transaksi");
 
@@ -245,7 +279,6 @@ export default function Keranjang() {
                 />
               </svg>
             </button>
-
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>
               <span className="font-semibold text-blue-400">
@@ -278,6 +311,7 @@ export default function Keranjang() {
             ) : (
               ""
             )}
+
             <hr className="mt-2 mb-2 bg-slate-400" />
             <div className="flex justify-between text-sm mb-4">
               <span className="font-bold">Subtotal</span>
@@ -299,12 +333,66 @@ export default function Keranjang() {
               }
               type="button"
               className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs"
-              onClick={simpanOrder}
+              onClick={
+                (noTelepon == "Kosong" && namaPelanggan == "Kosong") ||
+                (no_transaksi !== 0 && data2?.order[0].status_order != "closed")
+                  ? simpanOrder
+                  : () => setIsShowModal(true)
+              }
             />
           </div>
         ) : (
           ""
         )}
+        {isShowModal ? (
+          <div className="fixed inset-0 flex items-center justify-center mx-6">
+            <div className="bg-white w-full p-6 rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold mb-4">Status Pembayaran</h2>
+              <div className="flex items-center mb-4">
+                <input
+                  type="radio"
+                  name="status_pembayaran"
+                  id="bayar_langsung"
+                  value="bayar_langsung"
+                  className="mr-2"
+                  checked={selectedOption === "bayar_langsung"}
+                  onChange={handleOptionChange}
+                />
+                <label htmlFor="bayar_langsung" className="font-semibold">
+                  Bayar Langsung
+                </label>
+              </div>
+              <div className="flex items-center mb-4">
+                <input
+                  type="radio"
+                  name="status_pembayaran"
+                  id="bayar_nanti"
+                  value="bayar_nanti"
+                  className="mr-2"
+                  checked={selectedOption === "bayar_nanti"}
+                  onChange={handleOptionChange}
+                />
+                <label htmlFor="bayar_nanti" className="font-semibold">
+                  Bayar Nanti
+                </label>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                  onClick={simpanOrder}
+                >
+                  Order
+                </button>
+                <button
+                  className="px-4 py-2 ml-2 bg-gray-400 text-white rounded-md"
+                  onClick={() => setIsShowModal(false)}
+                >
+                  Kembali
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </>
   );

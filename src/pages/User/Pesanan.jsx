@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../utils/axios";
 import { Button } from "../../components/Button";
 import { isError, useQuery } from "react-query";
@@ -16,6 +16,8 @@ export default function StatusOrder() {
   moment.locale("id");
   const navigate = useNavigate();
   const no_transaksi = sessionStorage.getItem("no_transaksi");
+  const location = useLocation();
+  const { state } = location;
 
   // react query
   const { isLoading, isFetching, isError, data } = useQuery(
@@ -73,7 +75,7 @@ export default function StatusOrder() {
       return "bg-yellow-300 text-slate-700";
     } else if (
       alur_pembayaran === "bayar_nanti" ||
-      "status_pembayaran" === "not_paid"
+      status_pembayaran === "not_paid"
     ) {
       return "bg-blue-300 text-white";
     }
@@ -92,7 +94,7 @@ export default function StatusOrder() {
       return "Perhatian: Lakukan Pembayaran Terlebih Dahulu ke Kasir";
     } else if (
       alur_pembayaran === "bayar_nanti" ||
-      "status_pembayaran" === "not_paid"
+      status_pembayaran === "not_paid"
     ) {
       return "Silahkan Tunggu Makanan yang Anda Pesan";
     }
@@ -170,18 +172,18 @@ export default function StatusOrder() {
             <div className="order__container w-full space-y-4 mb-32 text-sm">
               <div
                 className={`alert ${warnaAlert(
-                  data.setting.alur_pembayaran_konsumen,
+                  state ? state : data.order[0].status_pembayaran,
                   data.order[0].status_bayar
                 )} shadow-lg`}
               >
                 <div>
                   {iconAlert(
-                    data.setting.alur_pembayaran_konsumen,
+                    state ? state : data.order[0].status_pembayaran,
                     data.order[0].status_bayar
                   )}
                   <span>
                     {pesanAlert(
-                      data.setting.alur_pembayaran_konsumen,
+                      state ? state : data.order[0].status_pembayaran,
                       data.order[0].status_bayar
                     )}
                   </span>
@@ -210,9 +212,6 @@ export default function StatusOrder() {
                               layoutProduk(item, index)
                             )}
                           </div>
-                          {/* {data.order.order_detail.map((item, index) =>
-                        layoutProduk(item, index)
-                      )} */}
                         </div>
                       </div>
                     </div>
