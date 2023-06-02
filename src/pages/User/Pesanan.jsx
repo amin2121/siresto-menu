@@ -49,16 +49,14 @@ export default function StatusOrder() {
     switch (status) {
       case "open":
         return "bg-blue-400";
-        break;
       case "in_progress":
         return "bg-yellow-400";
-        break;
       case "served":
         return "bg-green-400";
-        break;
       case "closed":
         return "bg-red-400";
-        break;
+      default:
+        return "";
     }
   };
 
@@ -124,7 +122,7 @@ export default function StatusOrder() {
       <div className="order__item p-3 flex bg-white">
         <img
           src={baseUrl + item.produk.gambar}
-          alt="Produk Image"
+          alt={item.produk.gambar}
           className="h-16 w-16 object-cover rounded-lg"
         />
         <div className="ml-4 flex-1">

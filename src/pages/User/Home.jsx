@@ -14,12 +14,12 @@ import {
   tambahJumlahBeliProduk,
   tambahProduk,
 } from "../../features/produkSlice";
-import Promo from "../../components/Promo";
 
 export default function Home() {
   const { idKategori, kategoriProduk, keyword, produkKeranjang } = useSelector(
     (state) => state.produk
   );
+
   const noTelepon =
     localStorage.getItem("noTelepon") == "null" ||
     localStorage.getItem("noTelepon") == undefined
@@ -44,7 +44,7 @@ export default function Home() {
     }
   );
 
-  const filteredData = data?.filter((item) => item.status_produk === "1");
+  const filteredData = data?.filter((item) => item.status_produk == "1");
 
   const layoutProduk = (item, index) => (
     <ItemProduct

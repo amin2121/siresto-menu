@@ -1,16 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const nomejaSlice = createSlice({
-    name: 'nomeja',
-    initialState: {
-        no_meja: 0,
+  name: "nomeja",
+  initialState: {
+    no_meja: 0,
+  },
+  reducers: {
+    settingNoMeja: (state, action) => {
+      state.no_meja = action.payload;
     },
-    reducers: {
-        settingNoMeja: (state, action) => {
-            state.no_meja = action.payload
-        },
-    }
-})
+  },
+});
 
-export const { settingNoMeja } = nomejaSlice.actions
-export default nomejaSlice.reducer
+export const { settingNoMeja } = nomejaSlice.actions;
+export default nomejaSlice.reducer;
