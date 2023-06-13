@@ -4,7 +4,7 @@ import KeranjangKosong from "../../layouts/KeranjangKosong";
 import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { QueryClient, useMutation } from "react-query";
 import { swNormal } from "../../utils/sw";
 import axios from "../../utils/axios";
 import { useQuery } from "react-query";
@@ -197,9 +197,8 @@ export default function Keranjang() {
       onSettled: async (data, error) => {
         // setIsAction(!isAction)
         if (data) {
-          let status_pembayaran = selectedOption;
           dispatch(hapusSemuaProduk());
-          navigate("/pesanan", { state: status_pembayaran });
+          navigate("/pesanan");
 
           let noTransaksi = sessionStorage.getItem("no_transaksi");
 

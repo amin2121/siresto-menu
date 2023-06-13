@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../utils/axios";
@@ -16,16 +16,14 @@ export default function StatusOrder() {
   moment.locale("id");
   const navigate = useNavigate();
   const no_transaksi = sessionStorage.getItem("no_transaksi");
-  const location = useLocation();
-  const { state } = location;
 
   // react query
   const { isLoading, isFetching, isError, data } = useQuery(
     ["data-order"],
     () => fetchData(),
     {
-      staleTime: 15000,
-      refetchInterval: 15000,
+      staleTime: 5000,
+      refetchInterval: 5000,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
     }
@@ -170,19 +168,19 @@ export default function StatusOrder() {
             <div className="order__container w-full space-y-4 mb-32 text-sm">
               <div
                 className={`alert ${warnaAlert(
-                  state ? state : data.order[0].status_pembayaran,
-                  data.order[0].status_bayar
+                  data.order[0]?.status_pembayaran,
+                  data.order[0]?.status_bayar
                 )} shadow-lg`}
               >
                 <div>
                   {iconAlert(
-                    state ? state : data.order[0].status_pembayaran,
-                    data.order[0].status_bayar
+                    data.order[0]?.status_pembayaran,
+                    data.order[0]?.status_bayar
                   )}
                   <span>
                     {pesanAlert(
-                      state ? state : data.order[0].status_pembayaran,
-                      data.order[0].status_bayar
+                      data.order[0]?.status_pembayaran,
+                      data.order[0]?.status_bayar
                     )}
                   </span>
                 </div>
