@@ -158,6 +158,10 @@ export default function Keranjang() {
   const mutation = useMutation(
     async () => {
       let produk = keranjang;
+      let status_pembayaran =
+        data?.alur_pembayaran_konsumen === "pilihan_pelanggan"
+          ? selectedOption
+          : data.alur_pembayaran_konsumen;
 
       let dataForm = {
         no_transaksi: no_transaksi === 0 ? no_transaksi : lastTransaksi,
@@ -174,7 +178,7 @@ export default function Keranjang() {
         source: source,
         meja: meja,
         branch: branch,
-        status_pembayaran: selectedOption,
+        status_pembayaran: status_pembayaran,
       };
 
       const response = await axios.post(
@@ -334,7 +338,9 @@ export default function Keranjang() {
               className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs"
               onClick={
                 (noTelepon == "Kosong" && namaPelanggan == "Kosong") ||
-                (no_transaksi !== 0 && data2?.order[0].status_order != "closed")
+                (no_transaksi !== 0 &&
+                  data2?.order[0].status_order != "closed") ||
+                data?.alur_pembayaran_konsumen !== "pilihan_pelanggan"
                   ? simpanOrder
                   : () => setIsShowModal(true)
               }
