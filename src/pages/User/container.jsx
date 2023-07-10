@@ -1,5 +1,5 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../../layouts/HeaderUser";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -7,10 +7,23 @@ import "react-toastify/dist/ReactToastify.css";
 import Logo from "../../assets/logo/SiResto.png";
 
 const Container = () => {
+  const navigate = useNavigate();
   const { warna } = useSelector((state) => state.warnaKeranjang);
   const { no_meja } = useSelector((state) => state.nomeja);
+  const { source } = useSelector((state) => state.source);
+  const noTelepon = localStorage.getItem("noTelepon");
 
-  if (no_meja === null || no_meja === "null") {
+  useEffect(() => {
+    if (source === "webonline" && noTelepon === null) {
+      navigate("/pesan-online/login");
+    }
+  }, [source, noTelepon]);
+
+  if (
+    no_meja === null ||
+    (no_meja === "null" && source === null) ||
+    source === "null"
+  ) {
     return (
       <>
         <div className="min-h-screen flex items-center justify-center">

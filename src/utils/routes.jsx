@@ -10,6 +10,11 @@ import DaftarNamaPelanggan from "../pages/User/DaftarNamaPelanggan";
 import PembayaranBerhasil from "../pages/User/PembayaranBerhasil";
 import Pesanan from "../pages/User/Pesanan";
 import PilihPromo from "../pages/User/PilihPromo";
+import Login from "../pages/User/Login";
+import Register from "../pages/User/Register";
+import Verifikasi from "../pages/User/Verifikasi";
+import DaftarAlamat from "../pages/User/DaftarAlamat";
+import Profile from "../pages/User/Profile";
 
 const RouteManager = () => {
   return (
@@ -26,7 +31,12 @@ const RouteManager = () => {
       <Route path="/" element={<ContainerEmpty />}>
         <Route path="nomor-telepon" element={<DaftarNoTelepon />} />
         <Route path="nama-pelanggan" element={<DaftarNamaPelanggan />} />
+        <Route path="alamat" element={<DaftarAlamat />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
+      <Route path="pesan-online/login" element={<Login />} />
+      <Route path="pesan-online/register" element={<Register />} />
+      <Route path="pesan-online/verifikasi" element={<Verifikasi />} />
     </Routes>
   );
 };

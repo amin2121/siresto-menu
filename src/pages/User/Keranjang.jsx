@@ -34,6 +34,7 @@ export default function Keranjang() {
   const meja = sessionStorage.getItem("meja");
   const source = sessionStorage.getItem("source");
   const branch = sessionStorage.getItem("branch");
+  const alamat = localStorage.getItem("alamat");
   const promo = JSON.parse(sessionStorage.getItem("promo"));
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("bayar_langsung");
@@ -170,6 +171,7 @@ export default function Keranjang() {
         diskon: diskon + (promo ? parseFloat(promo.promo) : 0),
         no_telepon: noTelepon,
         nama_pelanggan: namaPelanggan,
+        alamat: alamat,
         nilai_laba: labaTotal,
         pajak: pajak,
         service_charge: serviceCharge,
@@ -229,6 +231,8 @@ export default function Keranjang() {
   const simpanOrder = async () => {
     if (noTelepon == "Kosong" && namaPelanggan == "Kosong") {
       navigate("/nomor-telepon");
+    } else if (source === "webonline" && alamat === null) {
+      navigate("/alamat");
     } else {
       await mutation.mutate();
     }
