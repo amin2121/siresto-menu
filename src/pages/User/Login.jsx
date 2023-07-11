@@ -28,7 +28,6 @@ const Login = () => {
               localStorage.setItem("noTelepon", res.no_hp);
               localStorage.setItem("email", res.email);
               localStorage.setItem("username", res.username);
-              console.log(res.alamat_1 === null);
               if (res.alamat_1 !== null) {
                 localStorage.setItem("alamat", res.alamat_1);
               }

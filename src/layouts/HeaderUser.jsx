@@ -16,6 +16,7 @@ function HeaderUser() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const keranjang = JSON.parse(sessionStorage.getItem("produkKeranjang"));
+  const pesanan = sessionStorage.getItem("no_transaksi");
   const nama = localStorage.getItem("namaPelanggan");
   let [searchParams, setSearchParams] = useSearchParams();
 
@@ -57,24 +58,26 @@ function HeaderUser() {
             className="relative cursor-pointer"
             onClick={() => navigate("/pesanan")}
           >
-            <span className="w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400">
+            {/* <span className="w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex justify-center items-center rounded-full h-3 w-3 bg-blue-500 text-white text-[10px]">
-                1
+                {pesanan?.length}
               </span>
-            </span>
+            </span> */}
             <IoBagHandleOutline size="24" />
           </div>
           <div
             className="relative cursor-pointer"
             onClick={() => navigate("/keranjang")}
           >
-            <span className="w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex justify-center items-center rounded-full h-3 w-3 bg-blue-500 text-white text-[10px]">
-                {keranjang?.length}
+            {keranjang?.length !== 0 && (
+              <span className="w-3 h-3 text-xs rounded-full absolute inline-flex -top-1 -right-1 bg-blue-400">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex justify-center items-center rounded-full h-3 w-3 bg-blue-500 text-white text-[10px]">
+                  {keranjang?.length}
+                </span>
               </span>
-            </span>
+            )}
             <IoCartOutline size="24" />
           </div>
 

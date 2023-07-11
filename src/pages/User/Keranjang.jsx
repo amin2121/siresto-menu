@@ -12,6 +12,7 @@ import { Button } from "../../components/Button";
 import { rupiah } from "../../utils/strings";
 import { hapusProduk, hapusSemuaProduk } from "../../features/produkSlice";
 import { warnaKeranjang } from "../../features/warnaKeranjangSlice";
+import Select from "react-select";
 
 export default function Keranjang() {
   const navigate = useNavigate();
@@ -38,10 +39,17 @@ export default function Keranjang() {
   const promo = JSON.parse(sessionStorage.getItem("promo"));
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("bayar_langsung");
+  const [jenisOrder, setJenisOrder] = useState("");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const options = [
+    { value: "Online Pick-Up", label: "Online Pick-Up" },
+    { value: "Online Delivery", label: "Online Delivery" },
+    { value: "Online Driver", label: "Online Driver" },
+  ];
 
   // react query
   const { data: data } = useQuery(["data-setting"], () => fetchSetting(), {
@@ -177,7 +185,7 @@ export default function Keranjang() {
         service_charge: serviceCharge,
         pajak_persen: pajakPersen,
         subtotal: subtotal,
-        source: source,
+        source: source === "webonline" ? jenisOrder : source,
         meja: meja,
         branch: branch,
         status_pembayaran: status_pembayaran,
@@ -286,6 +294,22 @@ export default function Keranjang() {
                 />
               </svg>
             </button>
+
+            {(source === "webonline" &&
+              no_transaksi !== 0 &&
+              data2?.order[0].status_order !== "closed") ||
+              (data?.alur_pembayaran_konsumen !== "pilihan_pelanggan" && (
+                <>
+                  <Select
+                    options={options}
+                    className="w-full border-blue-500 mb-4"
+                    classNamePrefix="select"
+                    onChange={(event) => setJenisOrder(event.value)}
+                    placeholder="Pilih jenis order"
+                  />
+                </>
+              ))}
+
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>
               <span className="font-semibold text-blue-400">
@@ -340,6 +364,7 @@ export default function Keranjang() {
               }
               type="button"
               className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs"
+              disabled={jenisOrder === ""}
               onClick={
                 (noTelepon == "Kosong" && namaPelanggan == "Kosong") ||
                 (no_transaksi !== 0 &&
