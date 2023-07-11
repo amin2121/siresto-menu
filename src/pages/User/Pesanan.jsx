@@ -22,8 +22,8 @@ export default function StatusOrder() {
     ["data-order"],
     () => fetchData(),
     {
-      staleTime: 5000,
-      refetchInterval: 5000,
+      staleTime: 0,
+      refetchInterval: 0,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
     }

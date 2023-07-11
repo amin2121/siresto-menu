@@ -39,7 +39,13 @@ export default function Keranjang() {
   const promo = JSON.parse(sessionStorage.getItem("promo"));
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("bayar_langsung");
-  const [jenisOrder, setJenisOrder] = useState("");
+  const [jenisOrder, setJenisOrder] = useState(
+    localStorage.getItem("jenisOrder") || "Online Pick-Up"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("jenisOrder", jenisOrder);
+  }, [jenisOrder]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -304,6 +310,9 @@ export default function Keranjang() {
                     options={options}
                     className="w-full border-blue-500 mb-4"
                     classNamePrefix="select"
+                    value={options.find(
+                      (option) => option.value === jenisOrder
+                    )}
                     onChange={(event) => setJenisOrder(event.value)}
                     placeholder="Pilih jenis order"
                   />
@@ -364,7 +373,6 @@ export default function Keranjang() {
               }
               type="button"
               className="w-full bg-blue-500 border-0 hover:bg-blue-700 text-xs"
-              disabled={jenisOrder === ""}
               onClick={
                 (noTelepon == "Kosong" && namaPelanggan == "Kosong") ||
                 (no_transaksi !== 0 &&
