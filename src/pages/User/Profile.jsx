@@ -18,7 +18,6 @@ export default function Profile() {
   const location = useLocation();
   const state = location.state;
   const email = localStorage.getItem("email");
-  const username = localStorage.getItem("username");
   const [nama, setNama] = useState(localStorage.getItem("namaPelanggan"));
   const [nomer, setNomer] = useState(localStorage.getItem("noTelepon"));
   const [alamat, setAlamat] = useState(localStorage.getItem("alamat"));
@@ -134,19 +133,6 @@ export default function Profile() {
               id="input-email"
               value={email}
               placeholder="Email"
-              disabled
-            />
-          </div>
-          <div className="my-4">
-            <InputUserWithIcon
-              title="Username"
-              directionIcon="left"
-              type="text"
-              icon={<FiUserCheck size="20" />}
-              name="username"
-              id="input-username"
-              value={username}
-              placeholder="Username"
               disabled
             />
           </div>
