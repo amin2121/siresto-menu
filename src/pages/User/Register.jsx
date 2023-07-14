@@ -15,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [nama, setNama] = useState("");
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [nomerWhatsapp, setNomerWhatsapp] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ const Register = () => {
     axios
       .post("sendotp", {
         phone_number: nomerWhatsapp,
-        username: username,
+        // username: username,
         email: email,
       })
       .then((response) => {
@@ -46,7 +46,7 @@ const Register = () => {
           "userMenu",
           JSON.stringify({
             nama: nama,
-            username: username,
+            // username: username,
             email: email,
             nomerWhatsapp: nomerWhatsapp,
             password: password,
@@ -99,7 +99,7 @@ const Register = () => {
             >
               <Alert
                 type={"error"}
-                msg={"Email atau username ini sudah terdaftar"}
+                msg={"Nomer HP atau Email anda sudah terdaftar"}
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ const Register = () => {
             </div>
           </div>
 
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <label htmlFor="username" className="block">
               Username
             </label>
@@ -151,7 +151,7 @@ const Register = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="mb-5">
             <label htmlFor="no_whatsapp" className="block">
@@ -232,7 +232,6 @@ const Register = () => {
               className="w-full bg-blue-500 border-0 hover:bg-blue-400 mb-2"
               disabled={
                 nama == "" ||
-                username == "" ||
                 !check ||
                 nomerWhatsapp === "" ||
                 email === "" ||
