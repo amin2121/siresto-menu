@@ -54,7 +54,7 @@ export default function Keranjang() {
   const options = [
     { value: "Online Pick-Up", label: "Online Pick-Up" },
     { value: "Online Delivery", label: "Online Delivery" },
-    { value: "Online Driver", label: "Online Driver" },
+    // { value: "Online Driver", label: "Online Driver" },
   ];
 
   // react query
@@ -301,10 +301,9 @@ export default function Keranjang() {
               </svg>
             </button>
 
-            {(source === "webonline" &&
+            {source === "webonline" &&
               no_transaksi !== 0 &&
-              data2?.order[0].status_order !== "closed") ||
-              (data?.alur_pembayaran_konsumen !== "pilihan_pelanggan" && (
+              data2?.order[0].status_order !== "closed" && (
                 <>
                   <Select
                     options={options}
@@ -317,7 +316,7 @@ export default function Keranjang() {
                     placeholder="Pilih jenis order"
                   />
                 </>
-              ))}
+              )}
 
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>

@@ -244,7 +244,7 @@ const Register = () => {
             <div className="my-2">
               <p>
                 Sudah punya akun?
-                <Link to="/login" className="text-[#4c98dc]">
+                <Link to="/pesan-online/login" className="text-[#4c98dc] ml-1">
                   Login
                 </Link>
               </p>

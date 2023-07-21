@@ -125,6 +125,14 @@ const Login = () => {
             </div>
           </div>
 
+          {/* <div className="flex flex-wrap">
+            <div className="forgot-password md:block ml-auto">
+              <Link to="/forgot-password" className="/">
+                Lupa Password?
+              </Link>
+            </div>
+          </div> */}
+
           <div className="mt-6">
             <Button
               type="button"
@@ -133,17 +141,13 @@ const Login = () => {
               disabled={email === "" || password === ""}
               onClick={login.bind(this)}
             />
-            {/* <button
-              className="btn w-full"
-              disabled={email === "" || password === ""}
-              onClick={login.bind(this)}
-            >
-              Login
-            </button> */}
             <div className="my-2">
               <p>
                 Belum punya akun?
-                <Link to="/pesan-online/register" className="text-[#4c98dc]">
+                <Link
+                  to="/pesan-online/register"
+                  className="text-[#4c98dc] ml-1"
+                >
                   Daftar Sekarang
                 </Link>
               </p>

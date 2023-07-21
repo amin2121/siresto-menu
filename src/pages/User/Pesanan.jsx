@@ -43,6 +43,12 @@ export default function StatusOrder() {
     return order;
   };
 
+  const branch = sessionStorage.getItem("branch");
+  const nameResto = branch
+    .split("-")
+    .map(([first, ...rest]) => first.toUpperCase() + rest.join(""))
+    .join(" ");
+
   const pilihWarnaStatusOrder = (status) => {
     switch (status) {
       case "open":
@@ -77,8 +83,31 @@ export default function StatusOrder() {
     }
   }
 
-  function pesanAlert(alur_pembayaran, status_pembayaran) {
+  function pesanAlert(
+    alur_pembayaran,
+    status_pembayaran,
+    source,
+    status_order
+  ) {
     if (
+      status_pembayaran === "already_paid" &&
+      source !== "qrcode" &&
+      status_order === "closed"
+    ) {
+      return "Pesanan telah diterima. Terima kasih atas pembelian Anda.";
+    } else if (status_pembayaran === "not_paid" && source !== "qrcode") {
+      return "Perhatian : Lakukan Pembayaran ke Resto " + nameResto;
+    } else if (
+      status_pembayaran === "already_paid" &&
+      source === "Online Pick-Up"
+    ) {
+      return "Pesanan sedang diproses. Silakan ambil di Restoran kami. Terima kasih.";
+    } else if (
+      status_pembayaran === "already_paid" &&
+      source === "Online Delivery"
+    ) {
+      return "Pesanan sedang diproses dan akan segera diantar ke rumah Anda. Terima kasih.";
+    } else if (
       alur_pembayaran === "bayar_langsung" &&
       status_pembayaran === "already_paid"
     ) {
@@ -180,7 +209,9 @@ export default function StatusOrder() {
                   <span>
                     {pesanAlert(
                       data.order[0]?.status_pembayaran,
-                      data.order[0]?.status_bayar
+                      data.order[0]?.status_bayar,
+                      data.order[0]?.source,
+                      data.order[0]?.status_order
                     )}
                   </span>
                 </div>
@@ -222,12 +253,21 @@ export default function StatusOrder() {
                             {data != null ? item.nama_pelanggan : ""}
                           </p>
                         </div>
-                        <div className="flex justify-between text-xs text-slate-700 mb-2">
-                          <h1 className="font-semibold">No Meja</h1>
-                          <p className="font-semibold">
-                            {data != null ? item.meja?.no_meja : ""}
-                          </p>
-                        </div>
+                        {item.source === "qrcode" ? (
+                          <div className="flex justify-between text-xs text-slate-700 mb-2">
+                            <h1 className="font-semibold">No Meja</h1>
+                            <p className="font-semibold">
+                              {data != null ? item.meja?.no_meja : ""}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="flex justify-between text-xs text-slate-700 mb-2">
+                            <h1 className="font-semibold">Jenis Order</h1>
+                            <p className="font-semibold">
+                              {data != null ? item.source : ""}
+                            </p>
+                          </div>
+                        )}
                         <div className="flex justify-between text-xs text-slate-700 mb-2">
                           <h1 className="font-semibold">Tanggal & Waktu</h1>
                           <p className="font-semibold">

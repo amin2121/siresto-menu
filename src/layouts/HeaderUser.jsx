@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { settingNoMeja } from "../features/nomejaSlice";
@@ -9,6 +9,7 @@ import Logo from "../assets/logo/SiResto.png";
 import { IoCartOutline, IoBagHandleOutline } from "react-icons/io5";
 import { useSearchParams } from "react-router-dom";
 import profile from "../assets/users/blank-profile.webp";
+import DropdownHeader from "../components/DropdownHeader";
 
 function HeaderUser() {
   const { no_meja } = useSelector((state) => state.nomeja);
@@ -18,6 +19,7 @@ function HeaderUser() {
   const keranjang = JSON.parse(sessionStorage.getItem("produkKeranjang"));
   const pesanan = sessionStorage.getItem("no_transaksi");
   const nama = localStorage.getItem("namaPelanggan");
+  const [isOpen, setIsOpen] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -80,18 +82,11 @@ function HeaderUser() {
             )}
             <IoCartOutline size="24" />
           </div>
-
-          <Link to="/profile">
-            <div className="inline-flex w-full justify-center text-sm font-medium">
-              <div className="flex items-center space-x-3">
-                <img
-                  src={profile}
-                  alt="user"
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
-            </div>
-          </Link>
+          {source === "webonline" && (
+            <>
+              <DropdownHeader profile={profile} />
+            </>
+          )}
         </div>
       </div>
     </>
