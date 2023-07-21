@@ -12,9 +12,10 @@ const Container = () => {
   const { no_meja } = useSelector((state) => state.nomeja);
   const { source } = useSelector((state) => state.source);
   const noTelepon = localStorage.getItem("noTelepon");
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
-    if (source === "webonline" && noTelepon === null) {
+    if (source === "webonline" && noTelepon === null && email === null) {
       navigate("/pesan-online/login");
     }
   }, [source, noTelepon]);

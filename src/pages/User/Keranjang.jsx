@@ -301,9 +301,8 @@ export default function Keranjang() {
               </svg>
             </button>
 
-            {source === "webonline" &&
-              no_transaksi !== 0 &&
-              data2?.order[0].status_order !== "closed" && (
+            {(source === "webonline" && no_transaksi !== 0) ||
+              (data2?.order[0]?.status_order !== "closed" && (
                 <>
                   <Select
                     options={options}
@@ -316,7 +315,7 @@ export default function Keranjang() {
                     placeholder="Pilih jenis order"
                   />
                 </>
-              )}
+              ))}
 
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>
