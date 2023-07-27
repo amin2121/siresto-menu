@@ -20,11 +20,7 @@ const Container = () => {
     }
   }, [source, noTelepon]);
 
-  if (
-    no_meja === null ||
-    (no_meja === "null" && source === null) ||
-    source === "null"
-  ) {
+  if (no_meja === "null" && source === null) {
     return (
       <>
         <div className="min-h-screen flex items-center justify-center">

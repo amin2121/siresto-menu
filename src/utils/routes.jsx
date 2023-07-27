@@ -10,9 +10,11 @@ import DaftarNamaPelanggan from "../pages/User/DaftarNamaPelanggan";
 import PembayaranBerhasil from "../pages/User/PembayaranBerhasil";
 import Pesanan from "../pages/User/Pesanan";
 import PilihPromo from "../pages/User/PilihPromo";
-import Login from "../pages/User/Login";
-import Register from "../pages/User/Register";
-import Verifikasi from "../pages/User/Verifikasi";
+import Login from "../pages/User/Auth/Login";
+import Register from "../pages/User/Auth/Register";
+import ForgotPassword from "../pages/User/Auth/ForgotPassword";
+import ResetPassword from "../pages/User/Auth/ResetPassword";
+import Verifikasi from "../pages/User/Auth/Verifikasi";
 import DaftarAlamat from "../pages/User/DaftarAlamat";
 import Profile from "../pages/User/Profile";
 
@@ -36,6 +38,8 @@ const RouteManager = () => {
       </Route>
       <Route path="pesan-online/login" element={<Login />} />
       <Route path="pesan-online/register" element={<Register />} />
+      <Route path="pesan-online/forgot-password" element={<ForgotPassword />} />
+      <Route path="pesan-online/reset-password" element={<ResetPassword />} />
       <Route path="pesan-online/verifikasi" element={<Verifikasi />} />
     </Routes>
   );

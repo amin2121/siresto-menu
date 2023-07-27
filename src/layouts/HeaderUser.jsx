@@ -23,10 +23,19 @@ function HeaderUser() {
   let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("source") != null) {
+    if (
+      searchParams.get("source") != null &&
+      searchParams.get("source") === "qrcode"
+    ) {
       sessionStorage.setItem("source", searchParams.get("source"));
       sessionStorage.setItem("branch", searchParams.get("branch"));
       sessionStorage.setItem("meja", searchParams.get("meja"));
+    } else if (
+      searchParams.get("source") != null &&
+      searchParams.get("source") === "webonline"
+    ) {
+      localStorage.setItem("source", searchParams.get("source"));
+      localStorage.setItem("branch", searchParams.get("branch"));
     }
 
     dispatch(
@@ -37,13 +46,21 @@ function HeaderUser() {
       )
     );
 
-    dispatch(
-      settingSource(
-        sessionStorage.getItem("source") == null
-          ? searchParams.get("source")
-          : sessionStorage.getItem("source")
-      )
-    );
+    let source;
+
+    if (
+      sessionStorage.getItem("source") === "qrcode" ||
+      searchParams.get("source") === "qrcode"
+    ) {
+      source = sessionStorage.getItem("source") || searchParams.get("source");
+    } else if (
+      sessionStorage.getItem("source") === "webonline" ||
+      searchParams.get("source") === "webonline"
+    ) {
+      source = localStorage.getItem("source") || searchParams.get("source");
+    }
+
+    dispatch(settingSource(source));
   }, []);
 
   return (

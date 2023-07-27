@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "https://menu.awandigital.id/static/css/main.3ee6155f.css",
-    "main.js": "https://menu.awandigital.id/static/js/main.a7a3539f.js",
-    "static/js/787.db002e92.chunk.js": "https://menu.awandigital.id/static/js/787.db002e92.chunk.js",
-    "static/media/SiResto.png": "https://menu.awandigital.id/static/media/SiResto.97edc9331c2947250407.png",
-    "static/media/user-1.jpg": "https://menu.awandigital.id/static/media/user-1.a45e428827d29678dfb5.jpg",
-    "static/media/blank-profile.webp": "https://menu.awandigital.id/static/media/blank-profile.7a6a6c54279a54d1977c.webp",
-    "index.html": "https://menu.awandigital.id/index.html",
-    "main.3ee6155f.css.map": "https://menu.awandigital.id/static/css/main.3ee6155f.css.map",
-    "main.a7a3539f.js.map": "https://menu.awandigital.id/static/js/main.a7a3539f.js.map",
-    "787.db002e92.chunk.js.map": "https://menu.awandigital.id/static/js/787.db002e92.chunk.js.map"
+    "main.css": "https://dev.menu.awandigital.id/static/css/main.236a3a9f.css",
+    "main.js": "https://dev.menu.awandigital.id/static/js/main.c93169f4.js",
+    "static/js/787.db002e92.chunk.js": "https://dev.menu.awandigital.id/static/js/787.db002e92.chunk.js",
+    "static/media/SiResto.png": "https://dev.menu.awandigital.id/static/media/SiResto.97edc9331c2947250407.png",
+    "static/media/user-1.jpg": "https://dev.menu.awandigital.id/static/media/user-1.a45e428827d29678dfb5.jpg",
+    "static/media/blank-profile.webp": "https://dev.menu.awandigital.id/static/media/blank-profile.7a6a6c54279a54d1977c.webp",
+    "index.html": "https://dev.menu.awandigital.id/index.html",
+    "main.236a3a9f.css.map": "https://dev.menu.awandigital.id/static/css/main.236a3a9f.css.map",
+    "main.c93169f4.js.map": "https://dev.menu.awandigital.id/static/js/main.c93169f4.js.map",
+    "787.db002e92.chunk.js.map": "https://dev.menu.awandigital.id/static/js/787.db002e92.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3ee6155f.css",
-    "static/js/main.a7a3539f.js"
+    "static/css/main.236a3a9f.css",
+    "static/js/main.c93169f4.js"
   ]
 }

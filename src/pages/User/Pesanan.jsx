@@ -22,15 +22,18 @@ export default function StatusOrder() {
     ["data-order"],
     () => fetchData(),
     {
-      staleTime: 0,
-      refetchInterval: 0,
+      staleTime: 100,
+      refetchInterval: 100,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
     }
   );
 
   const fetchData = async () => {
-    let branch = sessionStorage.getItem("branch");
+    let branch =
+      sessionStorage.getItem("branch") != null
+        ? sessionStorage.getItem("branch")
+        : localStorage.getItem("branch");
     let no_transaksi = sessionStorage.getItem("no_transaksi");
 
     const response = await axios.get(
@@ -43,7 +46,10 @@ export default function StatusOrder() {
     return order;
   };
 
-  const branch = sessionStorage.getItem("branch");
+  const branch =
+    sessionStorage.getItem("branch") != null
+      ? sessionStorage.getItem("branch")
+      : localStorage.getItem("branch");
   const nameResto = branch
     .split("-")
     .map(([first, ...rest]) => first.toUpperCase() + rest.join(""))
@@ -51,6 +57,8 @@ export default function StatusOrder() {
 
   const pilihWarnaStatusOrder = (status) => {
     switch (status) {
+      case "draft":
+        return "bg-slate-400";
       case "open":
         return "bg-blue-400";
       case "in_progress":

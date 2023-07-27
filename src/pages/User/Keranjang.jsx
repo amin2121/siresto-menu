@@ -33,8 +33,14 @@ export default function Keranjang() {
       ? "Kosong"
       : localStorage.getItem("namaPelanggan");
   const meja = sessionStorage.getItem("meja");
-  const source = sessionStorage.getItem("source");
-  const branch = sessionStorage.getItem("branch");
+  const source =
+    sessionStorage.getItem("source") != null
+      ? sessionStorage.getItem("source")
+      : localStorage.getItem("source");
+  const branch =
+    sessionStorage.getItem("branch") != null
+      ? sessionStorage.getItem("branch")
+      : localStorage.getItem("branch");
   const alamat = localStorage.getItem("alamat");
   const promo = JSON.parse(sessionStorage.getItem("promo"));
   const [isShowModal, setIsShowModal] = useState(false);
@@ -78,7 +84,10 @@ export default function Keranjang() {
   });
 
   const fetchData = async () => {
-    let branch = sessionStorage.getItem("branch");
+    let branch =
+      sessionStorage.getItem("branch") != null
+        ? sessionStorage.getItem("branch")
+        : localStorage.getItem("branch");
     let no_transaksi = sessionStorage.getItem("no_transaksi");
 
     const response = await axios.get(
@@ -160,7 +169,10 @@ export default function Keranjang() {
   }, []);
 
   const fetchSetting = async () => {
-    let resto = sessionStorage.getItem("branch");
+    let resto =
+      sessionStorage.getItem("branch") != null
+        ? sessionStorage.getItem("branch")
+        : localStorage.getItem("branch");
     const response = await axios.get(`resto/setting-resto?resto=${resto}`);
     const res = response.data.data;
 
@@ -301,8 +313,9 @@ export default function Keranjang() {
               </svg>
             </button>
 
-            {(source === "webonline" && no_transaksi !== 0) ||
-              (data2?.order[0]?.status_order !== "closed" && (
+            {source === "webonline" &&
+              (no_transaksi === 0 ||
+                data2?.order[0]?.status_order === "closed") && (
                 <>
                   <Select
                     options={options}
@@ -315,7 +328,7 @@ export default function Keranjang() {
                     placeholder="Pilih jenis order"
                   />
                 </>
-              ))}
+              )}
 
             <div className="flex justify-between mb-2">
               <span className="font-semibold">Total</span>

@@ -24,7 +24,10 @@ export default function Promo() {
   });
 
   const fetchData = async () => {
-    const branch = sessionStorage.getItem("branch");
+    const branch =
+      sessionStorage.getItem("branch") != null
+        ? sessionStorage.getItem("branch")
+        : localStorage.getItem("branch");
     const response = await axios.get(`promo/menu?resto=${branch}`);
     const res = await response.data;
     const data = res.data;

@@ -78,7 +78,7 @@ export default function DaftarAlamat() {
   return (
     <>
       <div className="px-4 flex flex-col flex-1 mt-4">
-        <Link to="/nomor-telepon">
+        <Link to="/keranjang">
           <BiArrowBack size="20" className="text-blue-500 mb-4" />
         </Link>
         <div className="flex items-center justify-center">
